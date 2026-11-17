@@ -7,7 +7,7 @@ public class EmployeeManager {
 
         // Check the number of arguments
         if (args.length != 1) {
-            System.out.println("Error: Invalid number of arguments.");
+            System.out.println(Constants.INVALID_NUMBER_MESSAGE);
             return;
         }
 
@@ -21,6 +21,7 @@ public class EmployeeManager {
                 }
 
             } catch (Exception exception) {
+                System.out.println("Error reading employee data.");
             }
 
             System.out.println(Constants.LOADED_MESSAGE);
@@ -36,28 +37,40 @@ public class EmployeeManager {
                         employeeNames[new Random().nextInt(employeeNames.length)]);
 
             } catch (Exception exception) {
+                System.out.println("Error selecting random employee.");
             }
 
             System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].startsWith("+")) {
+        } else if (args[0].startsWith(Constants.ADD_COMMAND)) {
 
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
+                if (args[0].length() == 1) {
+                    System.out.println(Constants.INVALID_ARGUMENT_MESSAGE);
+                    return;
+                }
+
                 writeFile(", " + args[0].substring(1), true);
 
             } catch (Exception exception) {
+                System.out.println("Error adding employee.");
             }
 
             System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].startsWith("?")) {
+        } else if (args[0].startsWith(Constants.SEARCH_COMMAND)) {
 
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String searchName = args[0].substring(1);
+
+                if (searchName.trim().isEmpty()) {
+                    System.out.println(Constants.INVALID_ARGUMENT_MESSAGE);
+                    return;
+                }
 
                 boolean employeeFound = false;
 
@@ -70,9 +83,11 @@ public class EmployeeManager {
                 }
 
                 if (employeeFound) {
-                    System.out.println("Employee '" + searchName + "' found!");
+                    System.out.println(
+                            "Employee '" + searchName + "' found!");
                 } else {
-                    System.out.println("Employee '" + searchName + "' not found!");
+                    System.out.println(
+                            "Employee '" + searchName + "' not found!");
                 }
 
             } catch (Exception exception) {
@@ -99,47 +114,67 @@ public class EmployeeManager {
 
             System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].startsWith("u")) {
+        } else if (args[0].startsWith(Constants.UPDATE_COMMAND)) {
 
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
+                if (args[0].length() == 1) {
+                    System.out.println(Constants.INVALID_ARGUMENT_MESSAGE);
+                    return;
+                }
+
                 String[] employeeNames = readFile().split(",");
 
                 for (int employeeIndex = 0;
                      employeeIndex < employeeNames.length;
                      employeeIndex++) {
 
-                    if (employeeNames[employeeIndex].equals(
-                            args[0].substring(1))) {
+                    if (employeeNames[employeeIndex].trim().equals(
+                            args[0].substring(1).trim())) {
 
-                        employeeNames[employeeIndex] = Constants.UPDATED_VALUE;
+                        employeeNames[employeeIndex] =
+                                Constants.UPDATED_VALUE;
                     }
                 }
 
                 writeFile(String.join(",", employeeNames), false);
 
             } catch (Exception exception) {
+                System.out.println("Error updating employee.");
             }
 
             System.out.println(Constants.UPDATED_MESSAGE);
 
-        } else if (args[0].startsWith("d")) {
+        } else if (args[0].startsWith(Constants.DELETE_COMMAND)) {
 
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
+                if (args[0].length() == 1) {
+                    System.out.println(Constants.INVALID_ARGUMENT_MESSAGE);
+                    return;
+                }
+
                 List<String> employeeList = new ArrayList<>(
                         Arrays.asList(readFile().split(",")));
 
-                employeeList.remove(args[0].substring(1));
+                employeeList.removeIf(
+                        employeeName -> employeeName.trim().equals(
+                                args[0].substring(1).trim()));
 
                 writeFile(String.join(",", employeeList), false);
 
             } catch (Exception exception) {
+                System.out.println("Error deleting employee.");
             }
 
             System.out.println(Constants.DELETED_MESSAGE);
+
+        } else {
+
+            // Handle invalid commands
+            System.out.println(Constants.INVALID_ARGUMENT_MESSAGE);
         }
     }
 

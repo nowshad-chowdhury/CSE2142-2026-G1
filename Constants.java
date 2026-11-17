@@ -13,16 +13,23 @@ public final class Constants {
     public static final String DELETED_MESSAGE = "Data Deleted.";
     public static final String ADDED_MESSAGE = "Employee Added.";
     public static final String FOUND_MESSAGE = "Employee found!";
+    public static final String INVALID_ARGUMENT_MESSAGE =
+            "Error: Invalid argument.";
+    public static final String INVALID_NUMBER_MESSAGE =
+            "Error: Invalid number of arguments.";
 
     // Command arguments
     public static final String LIST_COMMAND = "l";
     public static final String RANDOM_COMMAND = "s";
     public static final String COUNT_COMMAND = "c";
+    public static final String ADD_COMMAND = "+";
+    public static final String SEARCH_COMMAND = "?";
+    public static final String UPDATE_COMMAND = "u";
+    public static final String DELETE_COMMAND = "d";
 
     // Updated employee value
     public static final String UPDATED_VALUE = "Updated";
 
-    // Private constructor
     private Constants() {
     }
 }
