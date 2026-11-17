@@ -5,22 +5,18 @@ public class EmployeeManager {
 
     public static void main(String[] args) {
 
-        // Task 2: Check the number of arguments
+        // Check the number of arguments
         if (args.length != 1) {
             System.out.println("Error: Invalid number of arguments.");
             return;
         }
 
-        // Check arguments
         if (args[0].equals(Constants.LIST_COMMAND)) {
 
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String fileContent = readFile();
-                String[] employeeNames = fileContent.split(",");
-
-                for (String employeeName : employeeNames) {
+                for (String employeeName : readFile().split(",")) {
                     System.out.println(employeeName);
                 }
 
@@ -34,15 +30,10 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String fileContent = readFile();
-                System.out.println(fileContent);
+                String[] employeeNames = readFile().split(",");
 
-                String[] employeeNames = fileContent.split(",");
-
-                Random randomGenerator = new Random();
-                int randomIndex = randomGenerator.nextInt(employeeNames.length);
-
-                System.out.println(employeeNames[randomIndex]);
+                System.out.println(
+                        employeeNames[new Random().nextInt(employeeNames.length)]);
 
             } catch (Exception exception) {
             }
@@ -54,9 +45,7 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String employeeName = args[0].substring(1);
-
-                writeFile(", " + employeeName, true);
+                writeFile(", " + args[0].substring(1), true);
 
             } catch (Exception exception) {
             }
@@ -68,19 +57,10 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String fileContent = readFile();
-                String[] employeeNames = fileContent.split(",");
+                for (String employeeName : readFile().split(",")) {
 
-                boolean employeeFound = false;
-                String searchName = args[0].substring(1);
-
-                for (int employeeIndex = 0;
-                     employeeIndex < employeeNames.length && !employeeFound;
-                     employeeIndex++) {
-
-                    if (employeeNames[employeeIndex].equals(searchName)) {
+                    if (employeeName.equals(args[0].substring(1))) {
                         System.out.println(Constants.FOUND_MESSAGE);
-                        employeeFound = true;
                     }
                 }
 
@@ -94,8 +74,8 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String fileContent = readFile();
-                char[] characters = fileContent.toCharArray();
+                String employeeData = readFile();
+                char[] characters = employeeData.toCharArray();
 
                 boolean insideWord = false;
                 int wordCount = 0;
@@ -115,7 +95,7 @@ public class EmployeeManager {
                 }
 
                 System.out.println(
-                        wordCount + " word(s) found " + characters.length);
+                        wordCount + " word(s) found " + employeeData.length());
 
             } catch (Exception exception) {
             }
@@ -127,16 +107,15 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String fileContent = readFile();
-                String[] employeeNames = fileContent.split(",");
-
-                String employeeName = args[0].substring(1);
+                String[] employeeNames = readFile().split(",");
 
                 for (int employeeIndex = 0;
                      employeeIndex < employeeNames.length;
                      employeeIndex++) {
 
-                    if (employeeNames[employeeIndex].equals(employeeName)) {
+                    if (employeeNames[employeeIndex].equals(
+                            args[0].substring(1))) {
+
                         employeeNames[employeeIndex] = Constants.UPDATED_VALUE;
                     }
                 }
@@ -153,15 +132,10 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
-                String fileContent = readFile();
-                String[] employeeNames = fileContent.split(",");
-
-                String employeeName = args[0].substring(1);
-
                 List<String> employeeList = new ArrayList<>(
-                        Arrays.asList(employeeNames));
+                        Arrays.asList(readFile().split(",")));
 
-                employeeList.remove(employeeName);
+                employeeList.remove(args[0].substring(1));
 
                 writeFile(String.join(",", employeeList), false);
 
@@ -172,7 +146,7 @@ public class EmployeeManager {
         }
     }
 
-    // Task 4: Read employee data
+    // Read employee data from file
     private static String readFile() throws IOException {
 
         BufferedReader reader = new BufferedReader(
@@ -186,7 +160,7 @@ public class EmployeeManager {
         return fileContent;
     }
 
-    // Task 4: Write employee data
+    // Write employee data to file
     private static void writeFile(String fileContent, boolean append)
             throws IOException {
 
