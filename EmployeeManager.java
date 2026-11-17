@@ -12,9 +12,9 @@ public class EmployeeManager {
         }
 
         // Check arguments
-        if (args[0].equals("l")) {
+        if (args[0].equals(Constants.LIST_COMMAND)) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String fileContent = readFile();
@@ -27,11 +27,11 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Loaded.");
+            System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].equals("s")) {
+        } else if (args[0].equals(Constants.RANDOM_COMMAND)) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String fileContent = readFile();
@@ -47,11 +47,11 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Loaded.");
+            System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].contains("+")) {
+        } else if (args[0].startsWith("+")) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String employeeName = args[0].substring(1);
@@ -61,11 +61,11 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Loaded.");
+            System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].contains("?")) {
+        } else if (args[0].startsWith("?")) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String fileContent = readFile();
@@ -79,7 +79,7 @@ public class EmployeeManager {
                      employeeIndex++) {
 
                     if (employeeNames[employeeIndex].equals(searchName)) {
-                        System.out.println("Employee found!");
+                        System.out.println(Constants.FOUND_MESSAGE);
                         employeeFound = true;
                     }
                 }
@@ -87,11 +87,11 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Loaded.");
+            System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].contains("c")) {
+        } else if (args[0].equals(Constants.COUNT_COMMAND)) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String fileContent = readFile();
@@ -120,11 +120,11 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Loaded.");
+            System.out.println(Constants.LOADED_MESSAGE);
 
-        } else if (args[0].contains("u")) {
+        } else if (args[0].startsWith("u")) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String fileContent = readFile();
@@ -137,7 +137,7 @@ public class EmployeeManager {
                      employeeIndex++) {
 
                     if (employeeNames[employeeIndex].equals(employeeName)) {
-                        employeeNames[employeeIndex] = "Updated";
+                        employeeNames[employeeIndex] = Constants.UPDATED_VALUE;
                     }
                 }
 
@@ -146,11 +146,11 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Updated.");
+            System.out.println(Constants.UPDATED_MESSAGE);
 
-        } else if (args[0].contains("d")) {
+        } else if (args[0].startsWith("d")) {
 
-            System.out.println("Loading data ...");
+            System.out.println(Constants.LOADING_MESSAGE);
 
             try {
                 String fileContent = readFile();
@@ -168,16 +168,16 @@ public class EmployeeManager {
             } catch (Exception exception) {
             }
 
-            System.out.println("Data Deleted.");
+            System.out.println(Constants.DELETED_MESSAGE);
         }
     }
 
-    // Task 4: Method for reading employee data
+    // Task 4: Read employee data
     private static String readFile() throws IOException {
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream("employees.txt")));
+                        new FileInputStream(Constants.EMPLOYEE_FILE)));
 
         String fileContent = reader.readLine();
 
@@ -186,12 +186,12 @@ public class EmployeeManager {
         return fileContent;
     }
 
-    // Task 4: Method for writing employee data
+    // Task 4: Write employee data
     private static void writeFile(String fileContent, boolean append)
             throws IOException {
 
         BufferedWriter writer = new BufferedWriter(
-                new FileWriter("employees.txt", append));
+                new FileWriter(Constants.EMPLOYEE_FILE, append));
 
         writer.write(fileContent);
 
