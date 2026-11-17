@@ -57,14 +57,26 @@ public class EmployeeManager {
             System.out.println(Constants.LOADING_MESSAGE);
 
             try {
+                String searchName = args[0].substring(1);
+
+                boolean employeeFound = false;
+
                 for (String employeeName : readFile().split(",")) {
 
-                    if (employeeName.equals(args[0].substring(1))) {
-                        System.out.println(Constants.FOUND_MESSAGE);
+                    if (employeeName.trim().equals(searchName.trim())) {
+                        employeeFound = true;
+                        break;
                     }
                 }
 
+                if (employeeFound) {
+                    System.out.println("Employee '" + searchName + "' found!");
+                } else {
+                    System.out.println("Employee '" + searchName + "' not found!");
+                }
+
             } catch (Exception exception) {
+                System.out.println("Error searching employee.");
             }
 
             System.out.println(Constants.LOADED_MESSAGE);
