@@ -87,29 +87,14 @@ public class EmployeeManager {
 
             try {
                 String employeeData = readFile();
-                char[] characters = employeeData.toCharArray();
 
-                boolean insideWord = false;
-                int wordCount = 0;
-
-                for (char character : characters) {
-
-                    if (character == ' ') {
-
-                        if (!insideWord) {
-                            wordCount++;
-                            insideWord = true;
-
-                        } else {
-                            insideWord = false;
-                        }
-                    }
-                }
+                int employeeCount = employeeData.split(",").length;
 
                 System.out.println(
-                        wordCount + " word(s) found " + employeeData.length());
+                        employeeCount + " employee(s) found.");
 
             } catch (Exception exception) {
+                System.out.println("Error counting employees.");
             }
 
             System.out.println(Constants.LOADED_MESSAGE);
